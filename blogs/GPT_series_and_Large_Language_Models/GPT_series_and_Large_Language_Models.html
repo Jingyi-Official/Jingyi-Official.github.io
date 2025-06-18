@@ -1,0 +1,721 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>GPT series and Large Language Models</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="18a3582c-50b0-8010-b683-c56f8a82bb1e" class="page sans"><header><h1 class="page-title">GPT series and Large Language Models</h1><p class="page-description"></p></header><div class="page-body"><p id="18a3582c-50b0-80da-9383-e5815b714c82" class="">With the advancement over the past decades, our artificial intelligence has transitioned from <strong>Narrow</strong> <strong>Artificial Intelligent (Narrow AI)</strong> to <strong>Artificial General Intelligent (AGI)</strong>.</p><ul id="1993582c-50b0-802d-9f49-fe0d05b9ffb2" class="bulleted-list"><li style="list-style-type:disc"><strong>Narrow AI</strong>: Models are designed and trained for solving a <span style="border-bottom:0.05em solid">specific task or a limited domain</span>. For example, models that can do face recognition is not able to recognise cat. For different input, you have to design different models: sequences  RNN, images/video-CNN, structural-GNN.</li></ul><ul id="1993582c-50b0-8068-b335-c58d576e14fb" class="bulleted-list"><li style="list-style-type:disc"><strong>AGI</strong>: Transformer can deal with all kind of data, images, texts, structural data, etc by tokenise. The advent of this kind of general architecture can realize different tasks or different modalities.</li></ul><p id="1993582c-50b0-8022-9823-ce4a779af851" class="">On the path to fully realising AGI, we are currently in the stage of LLMs, where, despite possessing powerful generative capabilities and outperforming Narrow AI in multi-task scenarios, they are still limited by long-text constraints, have restricted reasoning abilities, lack autonomous decision-making, and struggle with generalisation in unfamiliar tasks.</p><p id="1993582c-50b0-80bf-9f7b-e6602057bd00" class="">
+</p><p id="1993582c-50b0-806f-a918-e97ee92b7f9c" class="">In this blog, let’s explore the evolution of GPT to gain a deeper understanding of LLMs. We’ll examine how these models have advanced over time, their underlying mechanisms, and their role in shaping the future of AI.</p><p id="1993582c-50b0-80c8-9f73-feab1508433e" class="">
+</p><h1 id="18a3582c-50b0-80bc-8404-cb115f1664f1" class="">Large Language Models Overview</h1><p id="1993582c-50b0-8022-85c6-c82be47dbb1b" class="">A <strong>Large Language Model (LLM)</strong> primarily performs “<strong>next-token prediction”</strong>, meaning it generates new content based on a given context. The input content can be any form of data that can be tokenized, making LLMs highly versatile. For example, LLMs can be applied to:</p><ul id="1993582c-50b0-809a-896b-da9151893bff" class="bulleted-list"><li style="list-style-type:disc"><strong>Question Answering</strong>: Given a question in text form, generate an appropriate textual answer.</li></ul><ul id="1993582c-50b0-803c-b0da-fa11fd0dd662" class="bulleted-list"><li style="list-style-type:disc"><strong>Machine Translation</strong>: Given a sentence in English, generate its corresponding translation in French.</li></ul><p id="1993582c-50b0-8070-abf2-ec3f4925320d" class=""><strong>General Training Pipeline of LLMs includes</strong></p><ul id="1923582c-50b0-80ef-bf84-cef1adb05fa8" class="bulleted-list"><li style="list-style-type:disc"><strong>Self-supervised Pretraining</strong>: In this stage, the model is trained on large-scale, <strong>unlabeled </strong>data through self-supervised learning. Since there is no direct supervision, the model learns by predicting missing tokens or next tokens within a sentence. <br/>The objective is to learn as much as possible from raw data, enabling the model to acquire <br/><strong>general knowledge</strong> and improve its ability to <strong>generate coherent data</strong>. <br/>However, <br/><strong>at this stage, the model cannot directly meet human expectations</strong>. It lacks specific task capabilities, such as following instructions or engaging in meaningful dialogue.</li></ul><ul id="1923582c-50b0-80ce-86f1-db03e1726f5c" class="bulleted-list"><li style="list-style-type:disc"><strong>Supervised Fine Tuning (SFT)</strong>: Supervised fine-tuning refines the pretrained model to better align with <strong>human instructions</strong> and <strong>task-specific objectives</strong>, making it function similarly to a <strong>Narrow AI</strong> system. <br/>At this stage, the model is trained using <br/><strong>human-labeled datasets</strong>, where pairs of input queries and corresponding responses are provided.  Common datasets include <strong>instruction-following tasks</strong>, where the model is trained to respond appropriately when given commands such as “Summarize this article” or “Translate this text”. <br/>However, if the model is trained solely on supervised Q&amp;A data, it may become <br/><strong>too rigid</strong> and unable to handle ambiguous or open-ended scenarios effectively. For example, if a model is trained only to produce direct answers, it may fail to respond appropriately in nuanced real-life interactions. Consider the case where a person asks, <em>“What do you think about this issue?”</em>—the response should be more dynamic and context-aware, rather than a fixed answer. Therefore, the model after SFT learns to <strong>follow predefined patterns</strong> but lacks adaptability to novel instructions. And it can become <strong>overly deterministic</strong>, failing to provide diverse responses in creative or open-ended contexts.</li></ul><ul id="1923582c-50b0-8019-b5c5-e1485614c7dd" class="bulleted-list"><li style="list-style-type:disc"><strong>Reinforcement Learning from Human Feedback (RLHF)</strong>: To overcome the limitations of SFT, this stage improves the model’s ability to generate human-preferred responses by incorporating <strong>human evaluation and ranking</strong>. Instead of training with rigid input-output pairs, RLHF leverages human annotators who <strong>rank multiple generated responses</strong> based on their quality, coherence, and relevance. The model is then optimized using <strong>reinforcement learning</strong>, where it learns to prioritize responses that align more closely with human preferences. Unlike SFT, RLHF allows the model to develop <strong>greater flexibility and contextual awareness</strong>, improving its ability to handle <strong>ambiguous, nuanced, and multi-turn conversations</strong>.</li></ul><p id="1993582c-50b0-80d2-8a28-fdcbbf0940d9" class="">(More details will be covered later, but let’s first focus on the general idea.)</p><h1 id="18a3582c-50b0-8021-a0ab-e4e5998d6a52" class="">Transformer</h1><p id="1993582c-50b0-80d2-aba8-efb1a4b29e21" class="">Since Attention is All You Need, transformer has become the foundamental architecture behind the modern LLMs. The original motivation of this paper is trying to solve the issue face by traditional sequential models such as RNNs, LSTMs, particularly in handling long range dependencies efficiently. Ever since then, the development of <strong>scalable</strong> and <strong>efficient</strong> LLMs such as GPT has began. Therefore, it is important to learn about the core idea of transformers.</p><h2 id="18f3582c-50b0-8064-bab6-e59aa27ab0fc" class="">Architecture</h2><h3 id="18b3582c-50b0-809e-9c2b-c0e4c05ab739" class="">High-level</h3><p id="18b3582c-50b0-80b5-b0b2-d65fe629b808" class="">The model component is encoder-decoder with stacked layers of self-attention and FFN . The core idea is about the self-attention mechanism. With the help of the attention, the dependencies between source and target sequences are not restricted by the in-between distance anymore.</p><h3 id="18c3582c-50b0-809f-8aff-cd092e8e6baf" class="">Input embedding</h3><p id="18c3582c-50b0-801b-a513-e7b51be6bc0b" class="">d=512. The size of this list is hyperparameter we can set – basically it would be the length of the longest sentence in our training dataset.</p><h3 id="18a3582c-50b0-80d6-af02-e5f588ccfda4" class="">Attention Mechanisms</h3><p id="1903582c-50b0-8038-91bf-c1ae0b18978e" class=""><strong>What is Attention?</strong><div class="indented"><p id="1903582c-50b0-80d9-82c0-c20bc9092142" class="">Attention comes from the <span style="border-bottom:0.05em solid">inductive bias (assumption)</span> that within or among the sequences, there is a similarity/correlation(syntax relation) between elements. For example, ”<code>The animal didn&#x27;t cross the street because it was too tired</code>”. What does “it” in this sentence refer to? When the model is processing the word “it”, self-attention allows it to associate “it” with “animal”.</p><p id="18c3582c-50b0-806d-9aec-fb18edc7c8ce" class="">In order to have a better encoding of the word, we can also <span style="border-bottom:0.05em solid">encode this kind of information into the embedding</span>. In machine learning we often think of “information” as features. Then how to determine which feature vectors are more relevant to a particular feature vector? — Attention! (Information relevance —&gt; Feature relevance)</p><p id="1903582c-50b0-806c-8459-e895d8fd4dd6" class="">Similarly in computer vision, attention is, to some extent, motivated by how we pay visual attention to different regions of an image or correlate words in one sentence.</p></div></p><p id="18c3582c-50b0-806f-a7d2-c2436f1c72f2" class=""><strong>Attention Mechanisms as Information Retrieval Methods</strong><div class="indented"><p id="1993582c-50b0-8005-b46c-c1e3f16a9c8c" class="">Attention mechanism works very similar as information retrieval methods, where given a query, find relevant keys to retrieve corresponding values using attention score.</p><figure id="1993582c-50b0-80da-bbab-f85f2dd67a4d" class="image"><a href="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/information_retrieval.png"><img style="width:685.9921875px" src="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/information_retrieval.png"/></a></figure><p id="18c3582c-50b0-80ef-bcdf-fa8f11e8b935" class="">
+</p><p id="18f3582c-50b0-802c-a2b6-d40b63d41f53" class="">Suppose we have <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span> feature vectors <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∈</mo><msup><mi>R</mi><mi>d</mi></msup></mrow><annotation encoding="application/x-tex">x_i \in R^d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">i=1,2,..,N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">..</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span> (in natural language, it represents <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span> word from a sentence.), then we can obtain the following by projecting the original feature vectors <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></span><span>﻿</span></span> (it can be regarded as choosing what to query like in images, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">q_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> means edge/color…)</p><ul id="18f3582c-50b0-8051-8925-df07ecd87ffd" class="bulleted-list"><li style="list-style-type:disc">Query: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mi>i</mi></msub><mo>∈</mo><msup><mi>R</mi><msub><mi>d</mi><mi>q</mi></msub></msup></mrow><annotation encoding="application/x-tex">q_i \in R^{d_q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2819em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">i=1,2,..,N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">..</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="18a3582c-50b0-803d-8bee-d3c637999413" class="bulleted-list"><li style="list-style-type:disc">Keys: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>k</mi><mi>i</mi></msub><mo>∈</mo><msup><mi>R</mi><msub><mi>d</mi><mi>k</mi></msub></msup></mrow><annotation encoding="application/x-tex">k_i \in R^{d_k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">i=1,2,..,N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">..</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="18a3582c-50b0-80de-80f8-d2fce73b100b" class="bulleted-list"><li style="list-style-type:disc">Values: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub><mo>∈</mo><msup><mi>R</mi><msub><mi>d</mi><mi>v</mi></msub></msup></mrow><annotation encoding="application/x-tex">v_i \in R^{d_v}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">i=1,2,..,N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">..</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span></li></ul><p id="18a3582c-50b0-8048-ae1b-c8e6b034fa0a" class="">Then we can calculate the relevance between elements of query and key <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>k</mi><mi>j</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\alpha_{ij} = f(q_i, k_j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>. </p><ul id="18f3582c-50b0-804c-967d-d019db28b394" class="bulleted-list"><li style="list-style-type:disc">For chosen query, we get its relevance to each key</li></ul><ul id="18f3582c-50b0-80c0-94f8-c4edc1989039" class="bulleted-list"><li style="list-style-type:disc">To determine the relative importances of key vectors for the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>i</mi><mrow><mi>t</mi><mi>h</mi></mrow></msub></mrow><annotation encoding="application/x-tex">i_{th}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8095em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">h</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> query vector, <strong>softmax</strong> function can be used.<br/> <br/><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>=</mo><mrow><mi mathvariant="bold">s</mi><mi mathvariant="bold">o</mi><mi mathvariant="bold">f</mi><mi mathvariant="bold">t</mi><mi mathvariant="bold">m</mi><mi mathvariant="bold">a</mi><mi mathvariant="bold">x</mi></mrow><mo stretchy="false">(</mo><mo stretchy="false">[</mo><msub><mi>α</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="1em"/><mi mathvariant="normal">∀</mi><mi>i</mi><mo>∈</mo><mo stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>N</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\alpha_i = 
+
+
+
+\mathbf{softmax}
+
+
+([\alpha_{ij}]), \quad \forall i \in \{1, 2, \ldots, N\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathbf">softmax</span></span><span class="mopen">([</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">])</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∀</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">}</span></span></span></span></span><span>﻿</span></span><br/>Therefore, the summation of the relevance of each key to the chosen query is equal to 1.<br/></li></ul><ul id="18f3582c-50b0-80e4-aeec-d588da35e7f9" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">we can obtain a target vector for query using the weighted sum of all the key-values. </span>Therefore, the attention mechanism describes <em>a weighted average of (sequence) elements </em><span style="border-bottom:0.05em solid">with the weights dynamically computed based on an input query and elements’ keys </span>.</li></ul></div></p><p id="18f3582c-50b0-8079-9ccc-e11d0a5f28a3" class=""><strong>Functions to calculate relevance</strong><div class="indented"><p id="18f3582c-50b0-8087-9a0d-d27c82b4590e" class="">Two of the most popular approaches to find the relevance are <strong>Additive Attention</strong> and <strong>Dot Product Attention</strong>.</p><ul id="18f3582c-50b0-8038-8a1a-e486766308f7" class="bulleted-list"><li style="list-style-type:disc"><strong><a href="https://arxiv.org/abs/1409.0473">Additive Attention</a></strong><p id="18f3582c-50b0-8018-a088-dadc319f85c1" class="">It uses a single feedforward layer to compute a relevance score.</p><figure id="1903582c-50b0-802d-87ce-feadc6d4ed77" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>α</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msup><mi>W</mi><mi>T</mi></msup><mrow><mo fence="true">(</mo><mi>tanh</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mi>q</mi><mi>i</mi></msub><mo>+</mo><msub><mi>k</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow><mo separator="true">,</mo><mspace width="1em"/><mtext>where </mtext><msub><mi>d</mi><mi>q</mi></msub><mo>=</mo><msub><mi>d</mi><mi>k</mi></msub><mtext> and </mtext><mi>W</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><msub><mi>d</mi><mi>k</mi></msub></msup></mrow><annotation encoding="application/x-tex">\alpha_{ij} = W^T \left( \tanh(q_i + k_j) \right), \quad \text{where } d_q = d_k \text{ and } W \in \mathbb{R}^{d_k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1774em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mop">tanh</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">where </span></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord text"><span class="mord"> and </span></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div></figure></li></ul><ul id="1903582c-50b0-809a-8675-eed713a1aefe" class="bulleted-list"><li style="list-style-type:disc"><strong><a href="https://arxiv.org/pdf/1508.04025.pdf">Dot Product Attention</a></strong><p id="1903582c-50b0-8050-8de3-d13f3ff70109" class="">Remember that cosine similarity is very common to calculate the relevance between two vectors. And dot product geometrically represents cosine similarity <span style="border-bottom:0.05em solid">while also taking in account the magnitude of the vectors</span>.</p><figure id="1903582c-50b0-804b-afc4-fdc828b68ea3" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Cosine Similarity</mtext><mo>=</mo><mi>cos</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi mathvariant="bold">a</mi><mo>⋅</mo><mi mathvariant="bold">b</mi></mrow><mrow><mi mathvariant="normal">∥</mi><mi mathvariant="bold">a</mi><mi mathvariant="normal">∥</mi><mi mathvariant="normal">∥</mi><mi mathvariant="bold">b</mi><mi mathvariant="normal">∥</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\text{Cosine Similarity} = \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">Cosine Similarity</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">cos</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.3074em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∥</span><span class="mord mathbf">a</span><span class="mord">∥∥</span><span class="mord mathbf">b</span><span class="mord">∥</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathbf">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathbf">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="1903582c-50b0-80a7-a8d8-f0eb5982413b" class="">Therefore, the dot product attention between <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>q</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">q_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>k</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">k_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> is:</p><figure id="1903582c-50b0-80d0-a8cf-cee8e5e911af" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>α</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>q</mi><mi>i</mi></msub><mo>⋅</mo><msub><mi>k</mi><mi>j</mi></msub><mo separator="true">,</mo><mspace width="1em"/><mtext>where </mtext><msub><mi>d</mi><mi>q</mi></msub><mo>=</mo><msub><mi>d</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_{ij} = q_i \cdot k_j , \quad \text{where } d_q = d_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord text"><span class="mord">where </span></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure></li></ul><ul id="18b3582c-50b0-8060-af92-c303c88ac573" class="bulleted-list"><li style="list-style-type:disc"><strong><a href="https://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf">Scaled Dot Product Attention</a></strong><p id="1903582c-50b0-804c-8b34-ec2cdfefda29" class="">In transformer, a variant of dot product is proposed called scaled dot product attention.</p><p id="1903582c-50b0-80c3-9ab2-feeb0284fb9d" class="">They introduced a scaling factor to prevent softmax from reaching to the regions where gradients are extremely small when the dot product increases.</p><figure id="1903582c-50b0-8053-a892-c07e4fa28691" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>α</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mfrac><mrow><msub><mi>q</mi><mi>i</mi></msub><mo>⋅</mo><msub><mi>k</mi><mi>j</mi></msub></mrow><msqrt><msub><mi>d</mi><mi>k</mi></msub></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\alpha_{ij} = \frac{q_i \cdot k_j}{\sqrt{d_k}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.3014em;vertical-align:-0.93em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.2528em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8572em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.8172em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1828em;"><span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.93em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="18c3582c-50b0-8055-a392-d8842619359e" class="">(the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default) </p><p id="1953582c-50b0-8044-b6f5-db7d2621e26f" class="">This scaling factor is crucial to maintain an appropriate variance of attention values after initialisation. Remember that we initialise our layers with the intention of having equal variance throughout the model, and hence,  and  might also have a variance close to . However, performing a dot product over two vectors with a variance results in a scalar having -times higher variance:</p><figure id="1953582c-50b0-801e-a08b-f64ae59b297c" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>q</mi><mi>i</mi></msub><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>σ</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="1em"/><msub><mi>k</mi><mi>i</mi></msub><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>σ</mi><mo stretchy="false">)</mo><mo>→</mo><mi mathvariant="normal">Var</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>d</mi><mi>k</mi></msub></munderover><msub><mi>q</mi><mi>i</mi></msub><mo>⋅</mo><msub><mi>k</mi><mi>i</mi></msub><mo fence="true">)</mo></mrow><mo>=</mo><mi>σ</mi><mo>⋅</mo><msub><mi>d</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">q_i \sim \mathcal{N}(0, \sigma), \quad k_i \sim \mathcal{N}(0, \sigma) \rightarrow \operatorname{Var} \left( \sum_{i=1}^{d_k} q_i \cdot k_i \right) = \sigma \cdot d_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.14736em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathcal" style="margin-right:0.14736em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1306em;vertical-align:-1.2777em;"></span><span class="mop"><span class="mord mathrm">Var</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.853em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3169em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="1953582c-50b0-8087-92b1-f4b5e62457bf" class="">If we do not scale down the variance back to , the softmax over the logits will already saturate to  for one random element and  for all others. The gradients through the softmax will be close to zero so that we can’t learn the parameters appropriately.</p></li></ul></div></p><h3 id="18c3582c-50b0-8020-8820-e6d60980ad99" class="">Self-attention Mechanisms</h3><p id="1903582c-50b0-8071-b247-cdb95c377ae8" class="">In attention mechanisms, if the query, and (key, value) pair are from the same sequence, then it is <span style="border-bottom:0.05em solid">self-attention</span>. Therefore, the encoding using self-attention becomes the contextual representation of the input. On the contrary, if the query and the (key, value) pair are obtained from the different source, then it is <span style="border-bottom:0.05em solid">cross-attention</span>.</p><ul id="1993582c-50b0-80fd-bf1d-c9e705b35238" class="bulleted-list"><li style="list-style-type:disc"><strong>Self-Attention in Sentences</strong><p id="1993582c-50b0-80fa-9cb1-d1a48e3da878" class="">Here we give the example of self-attention in a sentence.</p><p id="1993582c-50b0-8058-9395-ffadbd23714f" class=""><strong>Calculation of Self-attention in transformer<br/><br/></strong>Here is the illustration of self-attention mechanism in transformer. </p><figure id="1903582c-50b0-8041-ac94-d0d4f814fa61" class="image"><a href="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/self-attention.png"><img style="width:709.9921875px" src="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/self-attention.png"/></a></figure><p id="1903582c-50b0-8020-aaf2-e2f81633c02b" class=""><strong>Matrix Calculation of Self-attention in transformer</strong></p><p id="1903582c-50b0-8081-a3e2-f02ceb978f4c" class="">In the actual implementation, however, this calculation is done in matrix form for faster processing.</p><p id="1903582c-50b0-80a9-bc34-d5d7eef24fb9" class="">
+</p></li></ul><figure id="1903582c-50b0-806a-9062-c9da44fa3200" class="image"><a href="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/669954e9-9af9-4aa3-ac03-15a4706f92c9.png"><img style="width:336px" src="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/669954e9-9af9-4aa3-ac03-15a4706f92c9.png"/></a></figure><p id="18c3582c-50b0-8011-b139-d0b235fa10cc" class="">
+</p><ul id="1903582c-50b0-804f-ab32-e318b86bbc18" class="bulleted-list"><li style="list-style-type:disc"><strong>Self-Attention for Image Features</strong><p id="1903582c-50b0-80dc-8306-c133f51fc677" class="">Features captured by a single feature map might make more sense when viewed with features captured by other feature maps. Self-attention helps to find feature representations that are aware of features captured by other feature maps. In this way, attention methods in images help to capture global dependencies in images.</p></li></ul><ul id="1953582c-50b0-800f-825f-e2321dad8c4e" class="bulleted-list"><li style="list-style-type:disc"><strong>Self-attention Mechanisms Implementation</strong><figure id="1993582c-50b0-801c-930c-e964f9987d4e" class="image" style="text-align:center"><a href="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/self-attention_implement.png"><img style="width:192px" src="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/self-attention_implement.png"/></a></figure><p id="1903582c-50b0-8080-888d-f787d24761d8" class="">From the implementation figure above, we can find more about the self-attention in transformer - <strong>mask</strong>: optional masking of specific entries could be applied (or say necessary) in the attention matrix. This is for instance used if we stack multiple sequences with different lengths into a batch. To still benefit from parallelisation in PyTorch, we pad the sentences to the same length and mask out the padding tokens during the calculation of the attention values. This is usually done by setting the respective attention logits to a very low value.<br/>attn_logits = attn_logits.masked_fill(mask == 0, -9e15)，在mask==0的地方用-9e15填充，比设定length短的地方设置为0，在计算attention的时候也会softmax近似为0, and in deocing, you don;t wanna expect to see the future output.<br/></p></li></ul><p id="1903582c-50b0-80dc-8e27-e02f5d74b6fb" class=""><strong>why self-attention works better?</strong><div class="indented"><p id="1903582c-50b0-805f-8ebc-e2e29c7e5cec" class="">how the contextual representation is better than just a transformation using fully connected layers. The word bat bat can have several meanings for example the bird or as the verb to refer to the action of batting. The context however constrains the meaning to a cricket bat.</p><p id="18c3582c-50b0-802b-bb5b-e1bc652365f7" class="">shared across feature maps</p></div></p><h3 id="1903582c-50b0-8020-a068-ef2c23922ae4" class=""><strong>Multi-Head Attention Mechanism</strong></h3><p id="1903582c-50b0-80c3-bedb-dd6f9eb717ad" class=""><strong>What is Multi-Head Attention</strong><div class="indented"><p id="1993582c-50b0-8070-8765-f92d4e132258" class="">Let’s learn from how to implement it first.</p><figure id="1993582c-50b0-80dc-afc8-cbef4ee73994" class="image" style="text-align:center"><a href="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/multi-head-attention-implement.png"><img style="width:192px" src="GPT%20series%20and%20Large%20Language%20Models%2018a3582c50b08010b683c56f8a82bb1e/multi-head-attention-implement.png"/></a></figure><p id="1903582c-50b0-80e1-8bdb-d558b1edecb7" class="">Consider a 4-head attention method. In this case, each of the query, key and value vectors (say dim=512) is <span style="border-bottom:0.05em solid">divided</span> into 4 heads (now each have dim=512/4=128). Self-attention is then be used to find the contextual representations of each of the four heads across the input vectors. The output will be concat together (back to dim=4*128=512), and once again project by a linear layer. Why add linear layer after concat</p><p id="1953582c-50b0-80a4-9666-e5da3bcda8dc" class="">
+</p></div></p><p id="1903582c-50b0-80b5-9ed6-f223582302b6" class=""><strong>Why</strong> <strong>using</strong> <strong>Multi-Head Attention</strong><div class="indented"><p id="1993582c-50b0-809b-9069-e9fc39bd9d1b" class="">From the implementation above, we know that multi-attention is more like a parallel version of partitioned single-head attention. Even though single-head attention is able to attend to the correlation between elements, yet often there are multiple different aspects a sequence element wants to attend to, and a single weighted average is not a good option for it. This is why we extend the attention mechanisms to multiple heads.</p><p id="1903582c-50b0-80d1-b02f-ef803ac56c90" class="">Therefore, multi-head attention allows the model to jointly attend to information <strong><span style="border-bottom:0.05em solid">from different representation subspaces</span></strong> <strong><span style="border-bottom:0.05em solid">at different positions</span></strong>. </p><ul id="1903582c-50b0-8047-b5a3-e01ea19c6c98" class="bulleted-list"><li style="list-style-type:disc">different positions: It expands the model’s ability to focus on different positions. For instance, ￼the word may have a strong correlation with the next word￼, but it can also be strongly correlated with the word before ￼when viewed from a different perspective.</li></ul><ul id="1903582c-50b0-80ee-93a5-f0a3a2c06768" class="bulleted-list"><li style="list-style-type:disc">different subspaces: It gives the attention layer multiple “representation subspaces” multiple sets of Query/Key/Value weight matrices. For example, if we want to pay attention to both subjective and adverts, single-head attention can not attend to both because all information have been averaged and model cannot effectively distinguish between different type of feature. In multi-head attention, each head could attend to different aspect of feature. The concatenation make it a richer representation.</li></ul></div></p><p id="18a3582c-50b0-80f6-ad85-f38478186d0f" class="">
+</p><h3 id="18c3582c-50b0-80d6-9c6d-c61a32788985" class=""><strong>Position-wise Feed-Forward Networks</strong></h3><p id="1903582c-50b0-8099-be62-ebbbb13aa238" class="">As discussed above, the main part of the self-attention mechanism is linear (e.g. linear projection). In order to increase the non-linearity of the model, feed-forward networks is involved. In this way, model can represent more complex patterns, and also capture more fine-grained features. </p><p id="1903582c-50b0-80c8-a976-cb9c20471c28" class="">Another points is “position-wise”, which means feed-forward networks is applied to each position separately and identically without considering context. The output from self-attention has already encode the dependencies among each element. Then these embeddings each independently are input into the FFDN, there is no dependencies involved, thus can be executed in parallel.</p><p id="1953582c-50b0-8068-acfa-c1ed4615b38e" class="">This MLP adds extra complexity to the model and allows transformations on each sequence element separately. You can imagine as this allows the model to “post-process” the new information added by the previous Multi-Head Attention, and prepare it for the next attention block. Usually, the inner dimensionality of the MLP is 2-8 larger than , i.e. the dimensionality of the original input . The general advantage of a wider layer instead of a narrow, multi-layer MLP is the faster, parallelizable execution. In practical, it will first project the embedding into higher dimension 2048, then project back to the original dimension 512.</p><h3 id="1903582c-50b0-80cc-bf0f-de20d88ae914" class="">Positional Encoding</h3><p id="1903582c-50b0-803d-bd69-f4139bca82ff" class="">Either in (multi-head) self-attention or position-wise feed-forward networks, the order of the input/embedding will not affect the output — <span style="border-bottom:0.05em solid">permutation-equivariant</span>. More specifically, if we switch two input elements in the sequence, the output is exactly the same besides the elements 1 and 2 switched. This means that the multi-head attention is actually looking at the input not as a sequence, but as a set of elements. </p><p id="1993582c-50b0-80f6-a40b-c984fc6761f9" class="">In tasks like language understanding, however, the position is important for interpreting the input words.   In order for the model to make use of the order of the sequence, we must inject some information about the <strong>relative or absolute position of the tokens</strong> in the sequence. The position information can therefore be added via the input features.</p><p id="1953582c-50b0-80d7-b3a4-fb44947e8e57" class="">We could learn a embedding for every possible position, but this would not generalize to a dynamical input sequence length. Hence, the better option is to use feature patterns that the network can identify from the features and potentially generalize to larger sequences.</p><p id="18c3582c-50b0-80eb-bc46-c5ccc5237bab" class="">
+</p><h3 id="18a3582c-50b0-8013-86a1-fea0fc07639e" class="">Residual connection</h3><p id="18c3582c-50b0-809b-aca7-de3ad8f7cef3" class="">Similar to ResNets, Transformers are designed to be very deep. Some models contain more than 24 blocks in the encoder. Hence, the residual connections are crucial for enabling a smooth gradient flow through the model.</p><p id="1953582c-50b0-8023-8a89-dfa2774defca" class="">“Without the residual connection, the information about the original sequence is lost. Remember that the Multi-Head Attention layer ignores the position of elements in a sequence, and can only learn it based on the input features. Removing the residual connections would mean that this information is lost after the first attention layer (after initialisation), and with a randomly initialised query and key vector, the output vectors for position  has no relation to its original input. All outputs of the attention are likely to represent similar/same information, and there is no chance for the model to distinguish which information came from which input element. An alternative option to residual connection would be to fix at least one head to focus on its original input, but this is very inefficient and does not have the benefit of the improved gradient flow.”</p><p id="1953582c-50b0-805b-afa4-cc65b309c130" class="">
+</p><h3 id="18a3582c-50b0-8005-989e-ff2335ba2999" class="">Layer Normalization</h3><ul id="1953582c-50b0-8087-89e6-f892b4e57e88" class="bulleted-list"><li style="list-style-type:disc"> it enables faster training and provides small regularization</li></ul><ul id="1953582c-50b0-8046-94e4-f7d2fd4725ca" class="bulleted-list"><li style="list-style-type:disc">ensures that the features are in a similar magnitude among the elements in the sequence</li></ul><ul id="1953582c-50b0-8069-addf-e61643c720d5" class="bulleted-list"><li style="list-style-type:disc">why not using batch normalization: because it depends on the batch size which is often small with Transformers (they require a lot of GPU memory), and BatchNorm has shown to perform particularly bad in language as the features of words tend to have a much higher variance (there are many, very rare words which need to be considered for a good distribution estimate).</li></ul><p id="1953582c-50b0-80ba-87d9-dc371bd0fe8c" class="">
+</p><h2 id="1953582c-50b0-8095-9977-c35c159ff1e0" class="">Liminations</h2><ul id="1953582c-50b0-80b5-8f34-d57115882104" class="bulleted-list"><li style="list-style-type:disc">Interpretability：it does not necessarily reflect the true interpretation of the model (there is a series of papers about this, including <a href="https://arxiv.org/abs/1902.10186">Attention is not Explanation</a> and <a href="https://arxiv.org/abs/1908.04626">Attention is not not Explanation</a>).</li></ul><ul id="1993582c-50b0-809a-a94d-fd3a6df025dd" class="bulleted-list"><li style="list-style-type:disc">Attention mechanism improvement<ul id="1993582c-50b0-8086-b46e-ddba896af01b" class="bulleted-list"><li style="list-style-type:circle">sparse attention</li></ul><ul id="1993582c-50b0-80dd-a625-fe1b4d81f375" class="bulleted-list"><li style="list-style-type:circle">linear attention </li></ul></li></ul><p id="1993582c-50b0-80d6-817c-d7681dea2604" class="">
+</p><p id="1933582c-50b0-8089-bafd-f09f6a027881" class="">
+</p><h1 id="1923582c-50b0-80b1-9c46-fc8c45e0f870" class="">GPT: The first <strong>Transformer-based pretrained model</strong> for NLP</h1><ul id="1933582c-50b0-80b1-bdf2-f37c74b9931d" class="bulleted-list"><li style="list-style-type:disc"><strong>Unidirectional</strong></li></ul><ul id="1933582c-50b0-801c-9c9a-ee48efd4eb3e" class="bulleted-list"><li style="list-style-type:disc">Uses the <strong>Transformer decoder</strong>, focusing only on generation (though in retrospect, it also plays a role in understanding). </li></ul><p id="1993582c-50b0-8071-a750-d2eaf97bd212" class="">
+</p><h2 id="1993582c-50b0-806f-8855-eb5aea149115" class="">Meanwhile pretrained models</h2><h3 id="1923582c-50b0-8066-9399-f3dee612fc4c" class="">Bert: masking</h3><ul id="1933582c-50b0-808d-b76d-f10f1c1f8a00" class="bulleted-list"><li style="list-style-type:disc"><strong>Bidirectional? Why unidirectional better than bidirectional?</strong></li></ul><ul id="1933582c-50b0-805a-b569-c1fc6393f925" class="bulleted-list"><li style="list-style-type:disc">point out: bigger is better</li></ul><ul id="1993582c-50b0-805f-8ab3-f0e5f243f82a" class="bulleted-list"><li style="list-style-type:disc">transformer encoder cuz address understanding</li></ul><h3 id="1933582c-50b0-80b1-a116-f70698fbab59" class="">T5</h3><ul id="1933582c-50b0-8031-bd6b-da0c13802b4c" class="bulleted-list"><li style="list-style-type:disc">keep scaling</li></ul><ul id="1993582c-50b0-80c5-b653-c29427449086" class="bulleted-list"><li style="list-style-type:disc">integrate all NLP task into one language model (e.g. classification, answer generation)</li></ul><ul id="1993582c-50b0-80ad-b8f5-ed2e52706766" class="bulleted-list"><li style="list-style-type:disc">encoder for text understanding, decoder for unidirectional generation</li></ul><ul id="1993582c-50b0-80c7-88a5-e1c21fb7181e" class="bulleted-list"><li style="list-style-type:disc">both input and output are tokens, </li></ul><p id="1933582c-50b0-8080-8902-f653218a7a9b" class="">
+</p><p id="1933582c-50b0-80a5-9dfb-c6e04f394d9e" class="">
+</p><p id="1933582c-50b0-8003-af9f-d548158099a4" class="">Langue modeling is an extreme form of multi-task learning: reasoning, coding…</p><p id="1933582c-50b0-8085-aaf5-d681e16e7dbc" class="">compression？</p><p id="1933582c-50b0-808b-bd81-e2206b095481" class="">corpora</p><p id="1933582c-50b0-8005-98cc-f6d32c48e08f" class="">perplexity</p><h1 id="1933582c-50b0-80ef-abba-c40bf22f25ef" class="">GPT-2</h1><ul id="1993582c-50b0-807a-9021-d56814576786" class="bulleted-list"><li style="list-style-type:disc">keep scaling, unidirectional, can solve multiple tasks</li></ul><h1 id="1993582c-50b0-8086-b880-c71f895b41b8" class="">GPT-3</h1><ul id="1993582c-50b0-809f-a4be-e53bd870de24" class="bulleted-list"><li style="list-style-type:disc">Cross-task generalization, in context learning, higher bound for “imagination”</li></ul><ul id="1993582c-50b0-8089-8f6e-ea3e4633c287" class="bulleted-list"><li style="list-style-type:disc">InstructGPT &amp; ChatGPT</li></ul><h1 id="1923582c-50b0-8017-9aae-ebfb5f60f6cd" class="">GPT-4</h1><p id="1993582c-50b0-802c-8282-ce37e132da22" class="">Unlike previous GPTs, GPT-4 is a <strong>multimodal model</strong>, meaning it can process both <strong>text and image inputs</strong> while generating <strong>text-based outputs</strong>. Built on a <strong>Transformer-style architecture</strong>, GPT-4 was <strong>pre-trained</strong> using vast amounts of publicly available and third-party licensed data, with the goal of <strong>predicting the next token</strong> in a given context. Following pre-training, it was further <strong>fine-tuned using Reinforcement Learning from Human Feedback (RLHF) </strong>to enhance its alignment with human intention and safety considerations.</p><p id="1993582c-50b0-804b-ae32-cad513290f96" class="">
+</p><p id="1993582c-50b0-8061-9d4e-e066acdfda10" class="">In their technical report, it doesn’t contain any further details about the architecture, hardware, training compute, dataset construction, training method, or similar. The four main parts covered are:</p><ul id="1993582c-50b0-8071-9669-f343e5563896" class="bulleted-list"><li style="list-style-type:disc"><strong>Predictable Scaling: </strong>trying to make performance predictions based on models trained with less compute. Predictable scaling, refers to predict performance as the model scales in size with less compute. GPT-4 is a very large scale model, therefore it is very hard to do extensive model-specific tuning. To address this problem, OpenAI developed infrastructure and optimization methods that have very predictable behavior across multiple scales. By doing so, before training, you’ll have idea about the model expected performance, which is useful for safety control and decisions around alignment, safety, and deployment.</li></ul><ul id="1993582c-50b0-803a-98b0-f567720e2553" class="bulleted-list"><li style="list-style-type:disc">Capabilities: GPT-4 demonstrates <strong>human-level performance</strong> on various professional and academic benchmarks, ML benchmarks, Visual input benchmarks, making significant advancements in reasoning, comprehension, and problem-solving.</li></ul><ul id="1993582c-50b0-8041-8553-fe98bf6a1413" class="bulleted-list"><li style="list-style-type:disc">Limitations: it still has limitations as previous GPT series (even with mitigations), such as hallucinations, biases, and computational constraints.</li></ul><ul id="1993582c-50b0-808b-ac9d-db1bf0481f48" class="bulleted-list"><li style="list-style-type:disc">Safety improvements: Adversarial Testing via Domain Experts, Model-Assisted Safety Pipeline with an additional set of safety-relevant RLHF training prompts and a rule-based reward models (RBRMs).</li></ul><p id="1993582c-50b0-8060-afc7-ccf4e129fb24" class="">
+</p><p id="1933582c-50b0-8063-969c-e49301b3418a" class="">
+</p><p id="1933582c-50b0-8076-89ae-eaaa88b1dd6b" class="">
+</p><h1 id="1983582c-50b0-8095-b1fc-d51f24519f91" class="">References</h1><p id="1993582c-50b0-80d0-ba82-e49c579adb6e" class=""><a href="https://jalammar.github.io/illustrated-transformer/">https://jalammar.github.io/illustrated-transformer/</a></p><p id="1993582c-50b0-8061-acaf-df9dfb0b1644" class=""><a href="https://jalammar.github.io/illustrated-gpt2/">https://jalammar.github.io/illustrated-gpt2/</a></p><p id="1993582c-50b0-80d8-b912-c057ba5ba3eb" class=""><a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">https://nlp.seas.harvard.edu/2018/04/03/attention.html</a></p><p id="1993582c-50b0-8096-ba84-f4582fd19b97" class=""><a href="https://www.youtube.com/watch?v=P127jhj-8-Y&amp;list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM">https://www.youtube.com/watch?v=P127jhj-8-Y&amp;list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM</a></p><p id="1993582c-50b0-8011-9db6-c94a2977c782" class=""><a href="https://www.youtube.com/watch?v=XfpMkf4rD6E">https://www.youtube.com/watch?v=XfpMkf4rD6E</a></p><p id="1993582c-50b0-80c9-b1be-d5b197378eed" class=""><a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/</a></p><p id="1993582c-50b0-806c-a9c2-dc705b36df1f" class=""><a href="https://zhuanlan.zhihu.com/p/2344632495">https://zhuanlan.zhihu.com/p/2344632495</a></p><p id="1993582c-50b0-80fe-a435-f7e90f898d0f" class=""><a href="https://zhuanlan.zhihu.com/p/632825694">https://zhuanlan.zhihu.com/p/632825694</a></p><p id="1993582c-50b0-80c3-9f14-d6e930905a35" class=""><a href="https://zhuanlan.zhihu.com/p/679715351">https://zhuanlan.zhihu.com/p/679715351</a></p><p id="1993582c-50b0-8005-839c-c5094286a2a1" class=""><a href="https://zhuanlan.zhihu.com/p/639252603">https://zhuanlan.zhihu.com/p/639252603</a></p><p id="1983582c-50b0-80a2-9d0e-ee8dae010009" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
